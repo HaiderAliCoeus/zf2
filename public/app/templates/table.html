@@ -1,0 +1,57 @@
+
+<div class="container">
+    <div class="alert alert-danger">
+        {{ user }}
+    </div>
+    <h1 class="well" ng-controller="loginController">Users <a href="#" ng-click="logout()">Logout</a> </h1>
+    <div class="col-md-8">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i> </span>
+            <input type="text" name="TestName" ng-model = "TestName" class="form-control" />
+        </div>
+        <table class="table">
+            <tr>
+                <th>#ID</th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <tr ng-repeat=" x in albums | filter: TestName">
+                <td>{{ x.id }}</td>
+                <td>{{ x.title }}</td>
+                <td>{{ x.artist }}</td>
+                <td> <button ng-show="isActiveUser" class="btn btn-warning" ng-click="albumEdit(x.id)">Edit</button> </td>
+                <td> <button ng-show="isActiveUser" class="btn btn-danger" ng-click="albumDelete(x.id)">Delete </button> </td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <form name="albumForm" ng-show="isActiveUser">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Title</span>
+                    <input type="text" name="title" ng-model="title" class="form-control" required/>
+                </div>
+                <span ng-show="albumForm.title.$invalid && albumForm.title.$dirty" class="text-warning">
+                        Title is required
+                 </span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Artist</span>
+                    <input type="text" name="artist" ng-model="artist" class="form-control" required />
+                </div>
+                 <span ng-show="albumForm.artist.$invalid && albumForm.artist.$dirty" class="text-warning">
+                        Artist Name is required
+                 </span>
+            </div>
+            <div class="form-group">
+                <button type="button" ng-disabled="albumForm.$invalid" ng-click="saveAlbum()" class="btn btn-primary">Save</button>
+                <button type="reset" class="btn btn-default" ng-click="resetAlbum">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

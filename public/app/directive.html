@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular js</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container" ng-app="directives">
+        <!-- Element Directive-->
+        <my-directive>
+            <p>this is paragraph in Directive</p>
+        </my-directive>
+
+
+        <!-- Elemetn Template -->
+        <my-element-template></my-element-template>
+    </div>
+<script src="js/angular.js"></script>
+<script src="app/directive.js"></script>
+<script>
+    app.directive('myElementTemplate', function(){
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="alert alert-success">This is with template</div>'
+        };
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular js</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row" ng-app="app">
+
+            <div class="col-md-6" data-ng-controller="FirstController">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" ng-model="firstName" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" data-ng-controller="SecondController">
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<script src="js/angular.js"></script>
+<script>
+
+    var app = angular.module('app', []);
+    app.factory('Scopes', function($rootScope) {
+        var mem = {};
+        return {
+            store: function(key, value) {
+                mem[key] = value;
+            },
+            get: function(key) {
+                return mem[key];
+            }
+        };
+    });
+
+    app.controller('FirstController', function ($scope, Scopes) {
+        Scopes.store('FirstController', $scope);
+        $scope.v1 = "One";
+        $scope.buttonClick = function () {
+            console.log("buttonClick function called");
+        };
+    });
+
+//    To access this in another controller :
+
+
+    app.controller('SecondController', function ($scope, Scopes) {
+        console.log( Scopes.get('FirstController').v1);
+        Scopes.get('FirstController').buttonClick();
+    });
+
+</script>
+
+</body>
+</html>

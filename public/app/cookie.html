@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular js</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body ng-app="cookiesExample" ng-controller="ExampleController">
+<script src="js/angular.js"></script>
+<script src="angular-1.2.29/angular-cookies.min.js"></script>
+<script>
+    angular.module('cookiesExample', ['ngCookies'])
+            .controller('ExampleController', ['$cookies', function($cookies) {
+                // Retrieving a cookie
+               // var favoriteCookie = $cookies.get('myFavorite');
+                // Setting a cookie
+                $cookies.put('myFavorite', 'oatmeal');
+                console.log('hello');
+            }]);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular js</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body ng-app="tabs">
+
+<tabs>
+    <pane title="First Tab">First pane.</pane>
+    <pane title="Second Tab">Second pane.</pane>
+</tabs>
+
+
+<script src="js/angular.js"></script>
+<script>
+    var app = angular.module('tabs', []);
+
+    app.directive('tabs', function () {
+        return {
+            restrict: 'E',
+            controller: function ($scope, $element) {
+                $scope.panes = [];
+                $scope.select = function (pane) {
+                    angular.forEach(panes, function (pane) {
+                        pane.selected = false;
+                    });
+                    pane.selected = true;
+                    console.log('selected pane ', pane.title);
+                };
+                this.addPane = function (pane) {
+                    if (!panes.lenght) $scope.select(pane);
+                    panes.push(pane);
+                };
+            },
+            template: '<div class="tabbable">'
+                            + '<ul class="nav nav-tabs">'
+                                + '<li ng-repeat="pane in panes"'
+                                    + 'ng-class="{active:pane.selected}">'
+                                        + '<a href="" ng-click="select(pane)">{{pane.title}}</a>' +
+                                '</li>'
+                            + '</ul>'
+                            + '<div class="tab-content" ng-transclude></div>'
+                        + '</div>',
+            replace: true
+        };
+    });
+
+    app.directive("pane", function()
+            {
+                return {
+                    require: "tabs",
+                    restrict: "E",
+                    transclude: true,
+                    scope: { title: "@" },
+                    link: function(scope, element, attrs, tabsCtrl) {
+                        tabsCtrl.addPane(scope);
+                    },
+                    template: '<div class="tab-pane" ng-class="{active: selected}"'
+                            + 'ng-transclude></div>',
+                    replace: true };
+            });
+</script>
+</body>
+</html>

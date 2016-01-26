@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular js</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row" ng-app="myApp" ng-controller="loginController">
+            <div class="col-md-4">
+                <form name="loginForm">
+                    <div class="form-group">
+                        <input type="email" ng-model="email" class="form-control" required/>
+                        <input type="password" ng-model="password" class="form-control" required/>
+                        <button ng-click="getLogin()" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                {{ text }}
+            </div>
+        </div>
+    </div>
+
+
+
+<script src="js/angular.js"></script>
+    <script src="app/app.js"></script>
+<script>
+
+    app.controller('loginController', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope){
+        $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+        $http.defaults.headers.put["Content-Type"] = "application/x-www-form-urlencoded";
+
+        $rootScope.url = 'http://dev:90/login/login';
+
+        $scope.email = '';
+        $scope.password = '';
+
+        $scope.getLogin = function(){
+            var user = $.param({email: $scope.email, password: $scope.password});
+            $http({
+                url: $rootScope.url,
+                method: 'POST',
+                data: user
+            })
+                    .then(function (response) {
+                                console.log('data', response);
+                                $scope.text = response.data;
+                                $rootScope.isActiveUser = response.data.user.isActive;
+                                console.log($rootScope.isActiveUser);
+                            },
+                            function (response) { // optional
+                                console.log('error', response);
+                                $scope.text = response.data;
+                            });
+        }
+
+
+
+
+
+    }]);
+</script>
+
+</body>
+</html>

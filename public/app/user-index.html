@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular js</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container" ng-app = 'user-app' ng-controller = 'userController'>
+
+        <div class="row">
+            <h1 class="well">Users</h1>
+            <div ng-include="'include.html'"></div>
+            <div class="col-md-8">
+                <table class="table" >
+                    <tr>
+                        <th>First Name </th>
+                        <th>Password</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr ng-repeat="user in users">
+                        <td>{{ user.fname }}</td>
+                        <td>{{ user.password }}</td>
+                        <td> <button class="btn btn-warning">Edit</button> </td>
+                        <td><button class="btn btn-danger" ng-click="removeUser($index)">Edit</button></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <form name="userForm">
+                    <div class="form-group">
+                        <input type="text" name="fname" ng-model="firstName" class="form-control" placeholder="First Name" required />
+                        <span ng-show = "UserForm.firstName.$error.required">First Name is required.</span>
+
+                        <input type="password" name="password" ng-model = "password" class="form-control" ng-model="password" placeholder="Password" required />
+                        <span ng-show = "UserForm.password.$error.required">Password is required.</span>
+
+                        <button type="button" ng-click="addUser()" class="btn btn-primary">Add User</button>
+                        <button type="reset" class="btn btn-default" ng-click="">Reset</button>
+                        <span>{{ firstName + ' ' + password }} </span>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+<script src="js/angular.js"></script>
+<script src="user/user.js"></script>
+</body>
+</html>

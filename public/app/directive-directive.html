@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular js</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body ng-app="directive-directive">
+
+<basket apple orange> Roll over me and check console</basket>
+
+
+<script src="js/angular.js"></script>
+<script>
+    var app = angular.module('directive-directive', []);
+
+    app.directive("basket", function () {
+        return {
+            restrict: "E",
+            controller: function ($scope, $element, $attrs) {
+                $scope.content = [];
+                this.addApple = function () {
+                    $scope.content.push("apple");
+                };
+                this.addOrange = function () {
+                    $scope.content.push("orange");
+                };
+            }, link: function (scope, element) {
+                element.bind("mouseenter", function () {
+                    console.log(scope.content);
+                });
+            }
+        };
+    });
+
+    app.directive('orange', function(){
+        return {
+            require: 'basket',
+            link: function(scope, element, attrs, basketCntrl){
+                basketCntrl.addOrange();
+            }
+        };
+    });
+
+    app.directive('apple', function(){
+        return {
+            require: 'basket',
+            link: function(scope, element, attrs, basketCntrl){
+                basketCntrl.addApple();
+            }
+        };
+    });
+
+
+</script>
+</body>
+</html>
